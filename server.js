@@ -155,58 +155,6 @@ app.get("/api/jokes/likes/order", (req, res, next) => {
       });
 });
 
-//add with category name or category_id?
-/*
-app.post("/api/joke/", (req, res, next) => {
-    var errors=[]
-    if (!req.body.joke){
-        errors.push("No joke specified");
-    }
-    if (!req.body.category_id){
-        errors.push("No category_id specified");
-    }
-    if (errors.length){
-        res.status(400).json({"error":errors.join(",")});
-        return;
-    }
-    var data = {
-        joke: req.body.joke,
-        likes: 0,
-        dislikes: 0,
-        category_id: req.body.category_id
-        }
-
-    var sql1 = 'INSERT INTO jokes (joke, likes, dislikes) VALUES (?,?,?)'
-    var params1 = [data.joke, data.likes, data.dislikes]
-    var sql2 = 'INSERT INTO joke_category (joke_id, category_id) VALUES (?,?)'
-    var params2 = []
-
-    db.run(sql1, params1, function (err, result) {
-        if (err){
-            res.status(400).json({"error": err.message})
-            return;
-        }
-
-        jokesID = this.lastID
-        params2.push( jokesID.toString(), data.category_id)
-        
-        res.json({
-            "message": "success",
-            "data": data,
-            "id" : this.lastID
-        })
-        
-        db.run(sql2, params2, function (err, result) {
-        if (err){
-            res.status(400).json({"error": err.message})
-            return;
-        }
-    });
-
-    });
-})
-*/
-
 //add new joke to a category with category_id
 //key: joke
 app.post("/api/joke/category/:id", (req, res, next) => {
@@ -279,31 +227,6 @@ app.post("/api/joke/category", (req, res, next) => {
         })
     });
 })
-
-//modify joke with id: not working
-/*
-app.patch("/api/jokes/:id", (req, res, next) => {
-    var data = {
-        joke: req.body.joke
-    }
-    db.run(
-        `UPDATE jokes set 
-           joke = COALESCE(?,joke), 
-           WHERE id = ?`,
-        [data.joke, req.params.id],
-        function (err, result) {
-            if (err){
-                res.status(400).json({"error": res.message})
-                return;
-            }
-            res.json({
-                message: "success",
-                data: data,
-                changes: this.changes
-            })
-    });
-})
-*/
 
 //add category to joke with joke_id
 //key: joke_id, category_id
